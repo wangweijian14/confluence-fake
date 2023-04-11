@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	v1 "confluence_fake/api/v1"
 	"confluence_fake/internal/service"
@@ -9,6 +10,7 @@ import (
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gfile"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 var (
@@ -132,7 +134,7 @@ func (c *cHello) FakeZipPath(ctx context.Context, req *v1.FakeZipPathReq) (res *
 	if !v.Bool() {
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
 	} else {
-		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, "http://59.110.32.216:8084/download/temp/"+req.SpaceKey+".xml.zip")
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, fmt.Sprintf("http://59.110.32.216:8084/download/temp/%d.xml.zip", gtime.Now().UnixMilli()))
 	}
 	return
 }
