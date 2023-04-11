@@ -277,10 +277,12 @@ func (s *sFakers) GetAllFakeSpace(ctx context.Context, limit int, start int) (ou
 
 	for obj := it.Next(); obj != nil; obj = it.Next() {
 		p := obj.(*importserv.ConfluenceSpaceData)
-		p.Links.Self = "http://59.110.32.216:8000/rest/api/space/" + p.Key
-		p.Links.Webui = "/display/" + p.Key
-		p.Expandable.Homepage = fmt.Sprintf("/rest/api/content/20231212%d", p.ID)
-		spaceData = append(spaceData, p)
+		if p.ID >= start {
+			p.Links.Self = "http://59.110.32.216:8000/rest/api/space/" + p.Key
+			p.Links.Webui = "/display/" + p.Key
+			p.Expandable.Homepage = fmt.Sprintf("/rest/api/content/20231212%d", p.ID)
+			spaceData = append(spaceData, p)
+		}
 	}
 	out.Results = spaceData
 	out.Limit = limit
