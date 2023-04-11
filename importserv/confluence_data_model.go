@@ -58,6 +58,7 @@ type FakeGroupUserListResp struct {
 type UserGroup struct {
 	Type  string `json:"type"`
 	Name  string `json:"name"`
+	Index int    `json:"index"`
 	Links Links  `json:"_links"`
 }
 
@@ -75,6 +76,7 @@ type UserConfluence struct {
 	Links           Links           `json:"_links"`
 	UserPreferences UserPreferences `json:"userPreferences"`
 	GpName          string          `json:"gpName"`
+	Index           int             `json:"index"`
 }
 
 type ProfilePicture struct {
