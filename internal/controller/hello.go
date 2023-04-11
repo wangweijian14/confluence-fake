@@ -10,7 +10,6 @@ import (
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gfile"
-	"github.com/gogf/gf/v2/os/gtime"
 )
 
 var (
@@ -134,7 +133,12 @@ func (c *cHello) FakeZipPath(ctx context.Context, req *v1.FakeZipPathReq) (res *
 	if !v.Bool() {
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
 	} else {
-		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, fmt.Sprintf("http://59.110.32.216:8000/download/temp/%d.xml.zip", gtime.Now().UnixMilli()))
+		g.Log().Info(ctx, g.RequestFromCtx(ctx).GetBodyString())
+		js, err := gjson.LoadContent(g.RequestFromCtx(ctx).GetBodyString(), true)
+		if err != nil {
+			g.RequestFromCtx(ctx).Response.WriteStatusExit(500, err.Error())
+		}
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, fmt.Sprintf("\"http://localhost:8000/download/temp/%s.xml.zip\"", js.Get("0")))
 	}
 	return
 }
@@ -147,7 +151,7 @@ func (c *cHello) FakeFileDownload(ctx context.Context, req *v1.DownloadReq) (res
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
 	} else {
 		gfile.CopyFile("resource/test.xml.zip", "resource/cache/"+req.FileName)
-		g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache" + req.FileName)
+		g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache/" + req.FileName)
 	}
 	return
 }

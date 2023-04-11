@@ -65,7 +65,7 @@ type IndexRes struct {
 
 // /rpc/json-rpc/confluenceservice-v2/exportSpace
 type FakeZipPathReq struct {
-	g.Meta   `path:"/rpc/json-rpc/confluenceservice-v2/exportSpace" tags:"fake" method:"post" summary:"checkconfig"`
+	g.Meta   `path:"/rpc/json-rpc/confluenceservice-v2/exportSpace"   tags:"fake" method:"post" mime:"multipart/form-data" summary:"checkconfig"`
 	SpaceKey string `json:"spaceKey"`
 }
 
