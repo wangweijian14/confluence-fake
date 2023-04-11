@@ -60,5 +60,16 @@ type IndexReq struct {
 	g.Meta `path:"/" method:"get" tags:"首页" summary:"首页"`
 }
 type IndexRes struct {
-	g.Meta `mime:"text/html" type:"string" example:"<html/>"`
+	g.Meta `mime:"text/html" type:"string" example:"string"`
+}
+
+// /rpc/json-rpc/confluenceservice-v2/exportSpace
+type FakeZipPathReq struct {
+	g.Meta   `path:"/rpc/json-rpc/confluenceservice-v2/exportSpace" tags:"fake" method:"get" summary:"checkconfig"`
+	SpaceKey string `json:"spaceKey"`
+}
+
+type DownloadReq struct {
+	g.Meta   `path:"/download/temp/{FileName}" tags:"fake" method:"get" summary:"checkconfig"`
+	FileName string `in:"path"  dc:"fileName"`
 }

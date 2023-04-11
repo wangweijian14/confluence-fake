@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gfile"
 )
 
 var (
@@ -121,5 +122,30 @@ func (c *cHello) ToIndex(ctx context.Context, req *v1.IndexReq) (res *v1.IndexRe
 	}
 	// 渲染模板
 	g.RequestFromCtx(ctx).Response.WriteTpl("index/index.html", params)
+	return
+}
+
+func (c *cHello) FakeZipPath(ctx context.Context, req *v1.FakeZipPathReq) (res *v1.IndexRes, err error) {
+	v, err := service.Fakers().GetCache(ctx).Get(ctx, "success")
+	g.Log().Info(ctx, "v ", v.Bool())
+
+	if !v.Bool() {
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
+	} else {
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, "http://59.110.32.216:8084/download/temp/"+req.SpaceKey+".xml.zip")
+	}
+	return
+}
+
+func (c *cHello) FakeFileDownload(ctx context.Context, req *v1.DownloadReq) (res *v1.IndexRes, err error) {
+	v, err := service.Fakers().GetCache(ctx).Get(ctx, "success")
+	g.Log().Info(ctx, "v ", v.Bool())
+
+	if !v.Bool() {
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
+	} else {
+		gfile.CopyFile("resource/test.xml.zip", "resource/cache/"+req.FileName)
+		g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache" + req.FileName)
+	}
 	return
 }
