@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    .el-table .warning-row {
+        background: oldlace;
+    }
+
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <el-form ref="form" :model="form" :inline="true">
+        <el-form-item label="FakeConfig">
+            <el-select v-model="form.setWhat" placeholder="请选择Fake-Confluence测试数据类型">
+            <el-option label="create-group" value="group-count"></el-option>
+            <el-option label="create-space" value="space-count"></el-option>
+            <el-option label="create-user" value="user-count"></el-option>
+            <el-option label="set-401" value="set-success"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="set-401">
+            <el-switch v-model="form.success"></el-switch>
+        </el-form-item>
+        <el-form-item label="total-create">
+            <el-input v-model.number="form.total"></el-input>
+          </el-form-item>
+          <el-form-item label="inGroup">
+            <el-input v-model="form.inGroup"></el-input>
+          </el-form-item>
+          <el-form-item label="Groups">
+            <el-input v-model="form.gps"></el-input>
+          </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">submit</el-button>
+            <el-button type="success" @click="visible = true">show cache message</el-button>
+        </el-form-item>
+    </el-form>
+   
+    <template>
+        <el-row :gutter="24">
+            <el-col :span="12"><div class="grid-content bg-purple">
+                <el-table
+                    :data="spacesData"
+                    style="width: 100%"
+                    :row-class-name="tableRowSpace">
+                    <el-table-column
+                    prop="key"
+                    label="key"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                    prop="name"
+                    label="name"
+                    >
+                    </el-table-column>
+                    <el-table-column
+                    prop="type"
+                    label="type">
+                    </el-table-column>
+                    <el-table-column
+                    prop="id"
+                    label="id">
+                    </el-table-column>
+                </el-table>
+            </div></el-col>
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <el-table
+                        :data="usersData"
+                        style="width: 100%"
+                        :row-class-name="tableRowSpace">
+                        <el-table-column
+                        prop="type"
+                        label="type"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="status"
+                        label="status"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="username"
+                        label="username">
+                        </el-table-column>
+                        <el-table-column
+                        prop="userKey"
+                        label="userKey">
+                        </el-table-column>
+                        <el-table-column
+                        prop="email"
+                        label="email">
+                        </el-table-column>
+                        <el-table-column
+                        prop="gpName"
+                        label="gpName">
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-col>
+        </el-row>
+        <el-row :gutter="24">
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <el-table
+                        :data="groupsData"
+                        style="width: 100%"
+                        :row-class-name="tableRowSpace">
+                        <el-table-column
+                        prop="type"
+                        label="type">
+                        </el-table-column>
+                        <el-table-column
+                        prop="_links.self"
+                        label="_links">
+                        </el-table-column>
+                        <el-table-column
+                        prop="name"
+                        label="name">
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <el-table
+                        :data="spacesData"
+                        style="width: 100%"
+                        :row-class-name="tableRowSpace">
+                        <el-table-column
+                        prop="key"
+                        label="key"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="name"
+                        label="name"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="type"
+                        label="type">
+                        </el-table-column>
+                        <el-table-column
+                        prop="id"
+                        label="id">
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </el-col>
+        </el-row>
+
+    </template>
+    <el-dialog :visible.sync="visible" title="cache msg">
+        <template>
+            <el-table
+                :data="tableData"
+                style="width: 100%"
+                :row-class-name="tableRowSpace">
+                <el-table-column
+                prop="success"
+                label="response-401"
+                >
+                </el-table-column>
+                <el-table-column
+                prop="spaces"
+                label="spaces-count"
+                >
+                </el-table-column>
+                <el-table-column
+                prop="groups"
+                label="groups-count">
+                </el-table-column>
+                <el-table-column
+                prop="users"
+                label="users-count">
+                </el-table-column>
+            </el-table>
+        </template>
+    </el-dialog>
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    // new Vue({
+    //   el: '#app',
+    //   data: function() {
+    //     return { visible: false }
+    //   }
+    // })
+
+
+    var Main = {
+        data() {
+            return {
+                spacesData: {{.jsonSpace}},
+                usersData: {{.jsonUser}},
+                groupsData: {{.jsonGroup}},
+                tableData: [{
+                success: '{{.success}}',
+                spaces: '{{.spaces.Size}}',
+                users: '{{.users.Size}}',
+                groups: '{{.groups.Size}}',
+                }],
+                visible : false,
+                form: {
+                setWhat: '',
+                success: true,
+                inGroup: '',
+                total: 10,
+                gps: '',
+                }
+            }
+    },
+    methods: {
+        tableRowSpace({row, rowIndex}) {
+        if (rowIndex%2 === 0) {
+            return 'success-row';
+        }
+        return '';
+      },
+      onSubmit() {
+        console.log('submit!');
+        const response = fetch(`/fake/config/` +this.form.setWhat + '?total=' + this.form.total + "&inGroup="+ this.form.inGroup);
+      }
+    }
+    
+  }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+  </script>
+</html>
