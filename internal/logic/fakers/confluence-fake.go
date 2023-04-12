@@ -192,7 +192,7 @@ func New() *sFakers {
 	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
 		Name: fmt.Sprintf("err:重复bodyContent.property:7012375"),
 		Key:  fmt.Sprintf("DOUBLETAG"),
-		ID:   0,
+		ID:   2,
 		Type: "global",
 	})
 
