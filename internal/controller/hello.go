@@ -138,7 +138,7 @@ func (c *cHello) FakeZipPath(ctx context.Context, req *v1.FakeZipPathReq) (res *
 		if err != nil {
 			g.RequestFromCtx(ctx).Response.WriteStatusExit(500, err.Error())
 		}
-		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, fmt.Sprintf("\"http://localhost:8000/download/temp/%s.xml.zip\"", js.Get("0")))
+		g.RequestFromCtx(ctx).Response.WriteStatusExit(200, fmt.Sprintf("\"http://59.110.32.216:8000/download/temp/%s.xml.zip\"", js.Get("0")))
 	}
 	return
 }
