@@ -226,7 +226,7 @@ func New() *sFakers {
 
 	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
 		Name: fmt.Sprintf("测试数据：空白的空间"),
-		Key:  fmt.Sprintf("SPACEKVNULL"),
+		Key:  fmt.Sprintf("NULLSPACE"),
 		ID:   7,
 		Type: "global",
 	})
