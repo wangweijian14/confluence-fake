@@ -73,34 +73,26 @@
             <el-col :span="12">
                 <div class="grid-content bg-purple">
                     <el-table
-                        :data="usersData"
+                        :data="spacesData"
                         style="width: 100%"
                         :row-class-name="tableRowSpace">
                         <el-table-column
+                        prop="key"
+                        label="key"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="name"
+                        label="name"
+                        >
+                        </el-table-column>
+                        <el-table-column
                         prop="type"
-                        label="type"
-                        >
+                        label="type">
                         </el-table-column>
                         <el-table-column
-                        prop="status"
-                        label="status"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                        prop="username"
-                        label="username">
-                        </el-table-column>
-                        <el-table-column
-                        prop="userKey"
-                        label="userKey">
-                        </el-table-column>
-                        <el-table-column
-                        prop="email"
-                        label="email">
-                        </el-table-column>
-                        <el-table-column
-                        prop="gpName"
-                        label="gpName">
+                        prop="id"
+                        label="id">
                         </el-table-column>
                     </el-table>
                 </div>
@@ -131,28 +123,37 @@
             <el-col :span="12">
                 <div class="grid-content bg-purple">
                     <el-table
-                        :data="spacesData"
+                        :data="usersData"
                         style="width: 100%"
                         :row-class-name="tableRowSpace">
                         <el-table-column
-                        prop="key"
-                        label="key"
-                        >
-                        </el-table-column>
-                        <el-table-column
-                        prop="name"
-                        label="name"
-                        >
-                        </el-table-column>
-                        <el-table-column
                         prop="type"
-                        label="type">
+                        label="type"
+                        >
                         </el-table-column>
                         <el-table-column
-                        prop="id"
-                        label="id">
+                        prop="status"
+                        label="status"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                        prop="username"
+                        label="username">
+                        </el-table-column>
+                        <el-table-column
+                        prop="userKey"
+                        label="userKey">
+                        </el-table-column>
+                        <el-table-column
+                        prop="email"
+                        label="email">
+                        </el-table-column>
+                        <el-table-column
+                        prop="gpName"
+                        label="gpName">
                         </el-table-column>
                     </el-table>
+                    
                 </div>
             </el-col>
         </el-row>

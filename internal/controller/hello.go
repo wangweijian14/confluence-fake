@@ -25,7 +25,7 @@ func (c *cHello) FakeGetSpaceList(ctx context.Context, req *v1.FakeGetSpaceListR
 		return nil, err
 	}
 	v, err := service.Fakers().GetCache(ctx).Get(ctx, "success")
-	g.Log().Info(ctx, "v ", v.Bool())
+	g.Log().Info(ctx, "v ", v.Bool(), req)
 
 	if !v.Bool() {
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
@@ -150,8 +150,13 @@ func (c *cHello) FakeFileDownload(ctx context.Context, req *v1.DownloadReq) (res
 	if !v.Bool() {
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
 	} else {
-		gfile.CopyFile("resource/default.xml.zip", "resource/cache/"+req.FileName)
-		g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache/" + req.FileName)
+
+		if gfile.Exists("resource/" + req.FileName) {
+			g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/" + req.FileName)
+		} else {
+			gfile.CopyFile("resource/default.xml.zip", "resource/cache/"+req.FileName)
+			g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache/" + req.FileName)
+		}
 	}
 	return
 }

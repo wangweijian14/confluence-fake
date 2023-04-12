@@ -174,15 +174,61 @@ func New() *sFakers {
 		DBUser:      dbUser,
 		Cache:       gcache.New(),
 	}
-	err = res.ConfigSpaces(10)
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("SPACE-NLP测试"),
+		Key:  fmt.Sprintf("NLP"),
+		ID:   0,
+		Type: "global",
+	})
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("naivete"),
+		Key:  fmt.Sprintf("NAIV"),
+		ID:   1,
+		Type: "global",
+	})
+
 	if err != nil {
 		panic(err)
 	}
-	err = res.ConfigGroup([]string{"confluence-administrators", "confluence-users", "wwj-test-gp-1", "wwj-test-gp-2", "wwj-test-gp-3"})
+
+	err = res.ConfigSpaces(3)
 	if err != nil {
 		panic(err)
 	}
-	err = res.ConfigUser(10, "confluence-users")
+	err = res.ConfigGroup([]string{"confluence-administrators", "confluence-users", "gp-1", "gp-2", "gp-3"})
+	if err != nil {
+		panic(err)
+	}
+
+	err = res.CreateUser(&importserv.UserConfluence{
+		Type:        "known",
+		Status:      "current",
+		Username:    fmt.Sprintf("wangweijian"),
+		UserKey:     fmt.Sprintf("wangweijian-key"),
+		DisplayName: fmt.Sprintf("三刀流"),
+		FullName:    fmt.Sprintf("三刀流"),
+		Email:       fmt.Sprintf("fake-email@wwj.cn"),
+		UnknownUser: false,
+		Anonymous:   false,
+		GpName:      "confluence-users",
+	})
+
+	err = res.CreateUser(&importserv.UserConfluence{
+		Type:        "known",
+		Status:      "current",
+		Username:    fmt.Sprintf("lufei"),
+		UserKey:     fmt.Sprintf("lufei-key"),
+		DisplayName: fmt.Sprintf("海贼王路飞"),
+		FullName:    fmt.Sprintf("海贼王路飞"),
+		Email:       fmt.Sprintf("fake-EMAIL@lufei.cn"),
+		UnknownUser: false,
+		Anonymous:   false,
+		GpName:      "confluence-users",
+	})
+
+	err = res.ConfigUser(3, "confluence-users")
 	if err != nil {
 		panic(err)
 	}
@@ -191,23 +237,31 @@ func New() *sFakers {
 }
 
 func (s *sFakers) ConfigSpaces(total int) error {
-	for i := 0; i < total; i++ {
+	for i := 2; i < total+2; i++ {
 		space := &importserv.ConfluenceSpaceData{
 			Name: fmt.Sprintf("SpaceName-%v-%v", time.Now().Unix(), i),
 			Key:  fmt.Sprintf("SPACE%d", i),
 			ID:   i,
 			Type: "global",
 		}
-		// Create a write transaction
-		txn := s.DBSpace.Txn(true)
-		if err := txn.Insert("space", space); err != nil {
-			fmt.Println("insert space err:", space)
+		err := s.CreateSpace(space)
+		if err != nil {
 			return err
 		}
-		// Commit the transaction
-		txn.Commit()
-		fmt.Println("insert space success:", space)
 	}
+	return nil
+}
+
+func (s *sFakers) CreateSpace(space *importserv.ConfluenceSpaceData) error {
+	// Create a write transaction
+	txn := s.DBSpace.Txn(true)
+	if err := txn.Insert("space", space); err != nil {
+		fmt.Println("insert space err:", space)
+		return err
+	}
+	// Commit the transaction
+	txn.Commit()
+	fmt.Println("insert space success:", space)
 	return nil
 }
 
@@ -233,8 +287,7 @@ func (s *sFakers) ConfigGroup(gpName []string) error {
 }
 
 func (s *sFakers) ConfigUser(total int, inGroup string) error {
-
-	for i := 0; i < total; i++ {
+	for i := 2; i < total+2; i++ {
 		user := &importserv.UserConfluence{
 			Type:        "known",
 			Status:      "current",
@@ -247,17 +300,24 @@ func (s *sFakers) ConfigUser(total int, inGroup string) error {
 			Anonymous:   false,
 			GpName:      inGroup,
 		}
-		// Create a write transaction
-		txn := s.DBUser.Txn(true)
-		if err := txn.Insert("user", user); err != nil {
-			fmt.Println("insert user err:", user)
+		err := s.CreateUser(user)
+		if err != nil {
 			return err
 		}
-		// Commit the transaction
-		txn.Commit()
-		fmt.Println("insert user success:", user)
 	}
+	return nil
+}
 
+func (s *sFakers) CreateUser(user *importserv.UserConfluence) error {
+	// Create a write transaction
+	txn := s.DBUser.Txn(true)
+	if err := txn.Insert("user", user); err != nil {
+		fmt.Println("insert user err:", user)
+		return err
+	}
+	// Commit the transaction
+	txn.Commit()
+	fmt.Println("insert user success:", user)
 	return nil
 }
 

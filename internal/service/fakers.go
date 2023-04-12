@@ -14,8 +14,10 @@ import (
 
 type IFakers interface {
 	ConfigSpaces(total int) error
+	CreateSpace(space *importserv.ConfluenceSpaceData) error
 	ConfigGroup(gpName []string) error
 	ConfigUser(total int, inGroup string) error
+	CreateUser(user *importserv.UserConfluence) error
 	GetAllFakeSpace(ctx context.Context, limit int, start int) (out *importserv.FakeConfluenceSpaceResult, err error)
 	GetAllGrout(ctx context.Context, limit int, start int) (out *importserv.FakeGroupResult, err error)
 	GetAllConfulenceUserByGroupName(ctx context.Context, gpName string, limit int, start int) (out *importserv.FakeGroupUserListResp, err error)
