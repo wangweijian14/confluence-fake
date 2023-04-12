@@ -150,7 +150,7 @@ func (c *cHello) FakeFileDownload(ctx context.Context, req *v1.DownloadReq) (res
 	if !v.Bool() {
 		g.RequestFromCtx(ctx).Response.WriteStatusExit(401, "error:401")
 	} else {
-		gfile.CopyFile("resource/test.xml.zip", "resource/cache/"+req.FileName)
+		gfile.CopyFile("resource/default.xml.zip", "resource/cache/"+req.FileName)
 		g.RequestFromCtx(ctx).Response.ServeFileDownload("resource/cache/" + req.FileName)
 	}
 	return
