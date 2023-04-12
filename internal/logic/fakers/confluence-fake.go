@@ -189,11 +189,18 @@ func New() *sFakers {
 		Type: "global",
 	})
 
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("err:重复bodyContent.property:7012375"),
+		Key:  fmt.Sprintf("DOUBLETAG"),
+		ID:   0,
+		Type: "global",
+	})
+
 	if err != nil {
 		panic(err)
 	}
 
-	err = res.ConfigSpaces(3)
+	err = res.ConfigSpaces(2)
 	if err != nil {
 		panic(err)
 	}
@@ -237,7 +244,7 @@ func New() *sFakers {
 }
 
 func (s *sFakers) ConfigSpaces(total int) error {
-	for i := 2; i < total+2; i++ {
+	for i := 3; i < total+3; i++ {
 		space := &importserv.ConfluenceSpaceData{
 			Name: fmt.Sprintf("SpaceName-%v-%v", time.Now().Unix(), i),
 			Key:  fmt.Sprintf("SPACE%d", i),
