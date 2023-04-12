@@ -196,6 +196,41 @@ func New() *sFakers {
 		Type: "global",
 	})
 
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("err:无法解析的zip包,一个文本文件"),
+		Key:  fmt.Sprintf("NOTZIPFILE"),
+		ID:   3,
+		Type: "global",
+	})
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("err:contenc内容为空"),
+		Key:  fmt.Sprintf("NULLCONTENT"),
+		ID:   4,
+		Type: "global",
+	})
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("err:页面标题为空"),
+		Key:  fmt.Sprintf("PAGETITLENULL"),
+		ID:   5,
+		Type: "global",
+	})
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("err:SPACE.name&SPACE.Key为空"),
+		Key:  fmt.Sprintf("SPACEKVNULL"),
+		ID:   6,
+		Type: "global",
+	})
+
+	err = res.CreateSpace(&importserv.ConfluenceSpaceData{
+		Name: fmt.Sprintf("测试数据：空白的空间"),
+		Key:  fmt.Sprintf("SPACEKVNULL"),
+		ID:   7,
+		Type: "global",
+	})
+
 	if err != nil {
 		panic(err)
 	}
@@ -244,7 +279,7 @@ func New() *sFakers {
 }
 
 func (s *sFakers) ConfigSpaces(total int) error {
-	for i := 3; i < total+3; i++ {
+	for i := 8; i < total+8; i++ {
 		space := &importserv.ConfluenceSpaceData{
 			Name: fmt.Sprintf("SpaceName-%v-%v", time.Now().Unix(), i),
 			Key:  fmt.Sprintf("SPACE%d", i),

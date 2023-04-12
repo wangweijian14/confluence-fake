@@ -2,9 +2,9 @@
 <hibernate-generic datetime="2023-04-12 03:55:17">
 <object class="Space" package="com.atlassian.confluence.spaces">
 <id name="id">6979588</id>
-<property name="name"><![CDATA[BaseName]]></property>
-<property name="key"><![CDATA[BASE]]></property>
-<property name="lowerKey"><![CDATA[base]]></property>
+<property name="name"><![CDATA[]]></property>
+<property name="key"><![CDATA[]]></property>
+<property name="lowerKey"><![CDATA[]]></property>
 <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">6946841</id>
 </property>
 <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">6946842</id>
@@ -245,11 +245,7 @@
 </object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">7012375</id>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
+<property name="body"><![CDATA[<p>this is content1</p><p>this is content2</p>]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">6946845</id>
 </property>
 <property name="bodyType">2</property>
@@ -261,7 +257,7 @@
 <property name="longValue"/><property name="dateValue"/></object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">7012374</id>
-<property name="body"><![CDATA[<p>fakecontent-body</p><p>fake-next-p</p>]]></property>
+<property name="body"><![CDATA[<p>this is content1</p><p>this is content2</p>]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">6946844</id>
 </property>
 <property name="bodyType">2</property>
