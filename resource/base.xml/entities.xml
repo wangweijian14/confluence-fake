@@ -2,9 +2,9 @@
 <hibernate-generic datetime="2023-04-12 03:55:17">
 <object class="Space" package="com.atlassian.confluence.spaces">
 <id name="id">6979588</id>
-<property name="name"><![CDATA[]]></property>
-<property name="key"><![CDATA[]]></property>
-<property name="lowerKey"><![CDATA[]]></property>
+<property name="name"><![CDATA[BaseName]]></property>
+<property name="key"><![CDATA[BASE]]></property>
+<property name="lowerKey"><![CDATA[base]]></property>
 <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">6946841</id>
 </property>
 <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">6946842</id>

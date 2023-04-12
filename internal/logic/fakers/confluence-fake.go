@@ -255,6 +255,7 @@ func New() *sFakers {
 		UnknownUser: false,
 		Anonymous:   false,
 		GpName:      "confluence-users",
+		Index:       0,
 	})
 
 	err = res.CreateUser(&importserv.UserConfluence{
@@ -268,9 +269,24 @@ func New() *sFakers {
 		UnknownUser: false,
 		Anonymous:   false,
 		GpName:      "confluence-users",
+		Index:       1,
 	})
 
-	err = res.ConfigUser(3, "confluence-users")
+	err = res.CreateUser(&importserv.UserConfluence{
+		Type:        "known",
+		Status:      "current",
+		Username:    fmt.Sprintf("fake-marsdev"),
+		UserKey:     fmt.Sprintf("fake-marsdev"),
+		DisplayName: fmt.Sprintf("marsdev"),
+		FullName:    fmt.Sprintf("marsdev"),
+		Email:       fmt.Sprintf("marsdev@ones.ai"),
+		UnknownUser: false,
+		Anonymous:   false,
+		GpName:      "confluence-users",
+		Index:       2,
+	})
+
+	err = res.ConfigUser(3, "gp-1")
 	if err != nil {
 		panic(err)
 	}
@@ -329,7 +345,7 @@ func (s *sFakers) ConfigGroup(gpName []string) error {
 }
 
 func (s *sFakers) ConfigUser(total int, inGroup string) error {
-	for i := 2; i < total+2; i++ {
+	for i := 3; i < total+3; i++ {
 		user := &importserv.UserConfluence{
 			Type:        "known",
 			Status:      "current",
@@ -341,6 +357,7 @@ func (s *sFakers) ConfigUser(total int, inGroup string) error {
 			UnknownUser: false,
 			Anonymous:   false,
 			GpName:      inGroup,
+			Index:       i,
 		}
 		err := s.CreateUser(user)
 		if err != nil {
